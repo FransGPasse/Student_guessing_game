@@ -1,3 +1,4 @@
+//Array som innehåller objekt med namn och bild på alla studenter
 const students = [
   {
     name: "Adi Dzocaj",
@@ -157,6 +158,7 @@ const students = [
   },
 ];
 
+//Array som innehåller objekt med namn på de elever som inte angett en bild
 const missing_students = [
   {
     name: "Andjela Saponjic",
@@ -180,15 +182,50 @@ const missing_students = [
   },
 ];
 
-const shuffleArray = array => {
-    for (let i = array.length - 1; i > 0; i--) {
-      const j = Math.floor(Math.random() * (i + 1));
-      const temp = array[i];
-      array[i] = array[j];
-      array[j] = temp;
-    }
-    console.log(array);
+//Här använder vi Fisher-Yates i en funktion som slumpar en array
+const shuffleArray = (array) => {
+  for (let i = array.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    const temp = array[i];
+    array[i] = array[j];
+    array[j] = temp;
   }
+};
 
-  
+//Och här kallar vi på funktionen med arrayn av studenter som argument för att få fram en slumpmässig ordning
 shuffleArray(students);
+
+//Hittar bilden på studenten
+const student = document.querySelector("#studentimage");
+
+//Sätter länken till bild
+student.setAttribute("src", students[0].image);
+
+//Konsol-loggar första studentens namn
+console.log(students[0].name);
+
+//Hittar wrappern med alla knappar i
+const studentNameButtonWrapper = document.querySelector("#button-wrapper");
+
+//Hittar ID på de fyra namnknapparna
+const studentBtn1 = document.querySelector("#studentbtn1");
+const studentBtn2 = document.querySelector("#studentbtn2");
+const studentBtn3 = document.querySelector("#studentbtn3");
+const studentBtn4 = document.querySelector("#studentbtn4");
+
+//Skapar en ny array med de fyra första studenterna
+const firstFourStudents = [students[0], students[1], students[2], students[3]];
+
+//Shufflar den nya arrayn så vi får en slumpmässig ordning till knapparna
+shuffleArray(firstFourStudents)
+
+//Sätter slumpade namn på slumpad plats
+studentBtn1.innerHTML = firstFourStudents[0].name;
+studentBtn2.innerHTML = firstFourStudents[1].name;
+studentBtn3.innerHTML = firstFourStudents[2].name;
+studentBtn4.innerHTML = firstFourStudents[3].name;
+
+//Lägger till en eventlistener på wrappern och kollar så att klicket skedde på knappen
+studentNameButtonWrapper.addEventListener("click", (e) => {
+  console.log(e.target);
+});

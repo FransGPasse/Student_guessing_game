@@ -182,7 +182,29 @@ const missing_students = [
   },
 ];
 
-//Här använder vi Fisher-Yates i en funktion som slumpar en array
+//Finds the wrapper containing all the buttons
+const studentNameButtonWrapper = document.querySelector("#button-wrapper");
+
+//Finding ID for the buttons with the name of the students
+const studentBtn1 = document.querySelector("#studentbtn1");
+const studentBtn2 = document.querySelector("#studentbtn2");
+const studentBtn3 = document.querySelector("#studentbtn3");
+const studentBtn4 = document.querySelector("#studentbtn4");
+
+//Gets the ID for the future image of the student to guess
+const student = document.querySelector("#studentimage");
+
+//Sets the number of guesses to the starting amount - zero
+let guesses = 0;
+
+//Gets the ID for the paragraph element where we can increment the number of guesses
+const numOfGuesses = document.querySelector("#numofguesses")
+
+
+
+//Puts most of the functionality in to a function
+const guessTheStudent = function () {
+  //Using Fisher-Yates to randomize the array
 const shuffleArray = (array) => {
   for (let i = array.length - 1; i > 0; i--) {
     const j = Math.floor(Math.random() * (i + 1));
@@ -192,40 +214,42 @@ const shuffleArray = (array) => {
   }
 };
 
-//Och här kallar vi på funktionen med arrayn av studenter som argument för att få fram en slumpmässig ordning
+//Calling the function to randomize the student array
 shuffleArray(students);
 
-//Hittar bilden på studenten
-const student = document.querySelector("#studentimage");
-
-//Sätter länken till bild
+//Setting the image source to the first student in the new randomized array
 student.setAttribute("src", students[0].image);
 
-//Konsol-loggar första studentens namn
+//Console logging the first students name
 console.log(students[0].name);
 
-//Hittar wrappern med alla knappar i
-const studentNameButtonWrapper = document.querySelector("#button-wrapper");
-
-//Hittar ID på de fyra namnknapparna
-const studentBtn1 = document.querySelector("#studentbtn1");
-const studentBtn2 = document.querySelector("#studentbtn2");
-const studentBtn3 = document.querySelector("#studentbtn3");
-const studentBtn4 = document.querySelector("#studentbtn4");
-
-//Skapar en ny array med de fyra första studenterna
+//Creates a new array with the first four students from the randomized array
 const firstFourStudents = [students[0], students[1], students[2], students[3]];
 
-//Shufflar den nya arrayn så vi får en slumpmässig ordning till knapparna
-shuffleArray(firstFourStudents)
+/* //Tar rätt namn på studenten på bilden
+const correctStudentName = firstFourStudents[0].name; */
 
-//Sätter slumpade namn på slumpad plats
+//Shuffles the new array so we get a random order for the buttons
+shuffleArray(firstFourStudents);
+
+//Putting the new shuffled array on to the buttons
 studentBtn1.innerHTML = firstFourStudents[0].name;
 studentBtn2.innerHTML = firstFourStudents[1].name;
 studentBtn3.innerHTML = firstFourStudents[2].name;
 studentBtn4.innerHTML = firstFourStudents[3].name;
+}
+
+guessTheStudent();
 
 //Lägger till en eventlistener på wrappern och kollar så att klicket skedde på knappen
 studentNameButtonWrapper.addEventListener("click", (e) => {
   console.log(e.target);
+  guessTheStudent();
+  guesses++;
+  numOfGuesses.innerHTML = `Number of guesses: ${guesses}`
 });
+
+
+/*   if (e.target.innerHTML === correctStudentName)  {
+    e.target.classList.add("correct");
+  } */

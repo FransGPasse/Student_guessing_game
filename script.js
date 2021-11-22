@@ -254,7 +254,6 @@ guessTheStudent();
 
 //Adds an eventlistener to the wrapper and checks if the click was registered on the actual button
 studentNameButtonWrapper.addEventListener("click", (e) => {
-
   //Alerts if guesses are more than 20 and ends the game
   if (guesses >= 20) {
     alert(`GAME OVER! You got ${correctGuesses} out of 20!`);
@@ -270,7 +269,7 @@ studentNameButtonWrapper.addEventListener("click", (e) => {
     } else {
       showHighscore.innerHTML = `Current highscore is ${highscore}. Keep trying!`;
     }
-    
+
     //Changes the text string at the bottom of the page to a button to restart the game
     numOfGuesses.innerHTML = `<button id="play-again" role="button">Play again</button>`;
     playAgain = document.querySelector("#play-again");

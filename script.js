@@ -201,22 +201,23 @@ let correctGuesses = 0;
 //Gets the ID for the paragraph element where we can increment the number of guesses
 const numOfGuesses = document.querySelector("#numofguesses");
 
+//Initializes some variables that we're going to user later
 let correctStudentName;
-
 let firstFourStudents = [];
+let playAgain;
+
+//Using Fisher-Yates to randomize the array
+const shuffleArray = (array) => {
+  for (let i = array.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    const temp = array[i];
+    array[i] = array[j];
+    array[j] = temp;
+  }
+};
 
 //Puts most of the functionality in to a function
-const guessTheStudent = function () {
-  //Using Fisher-Yates to randomize the array
-  const shuffleArray = (array) => {
-    for (let i = array.length - 1; i > 0; i--) {
-      const j = Math.floor(Math.random() * (i + 1));
-      const temp = array[i];
-      array[i] = array[j];
-      array[j] = temp;
-    }
-  };
-
+const guessTheStudent = () => {
   //Calling the function to randomize the student array
   shuffleArray(students);
 
@@ -227,7 +228,7 @@ const guessTheStudent = function () {
   console.log(students[0].name);
 
   //Creates a new array with the first four students from the randomized array
-  firstFourStudents = [students[0], students[1], students[2], students[3]];
+  firstFourStudents = students.slice(0, 4);
 
   //Tar rätt namn på studenten på bilden
   correctStudentName = firstFourStudents[0].name;
@@ -235,32 +236,53 @@ const guessTheStudent = function () {
   //Shuffles the new array so we get a random order for the buttons
   shuffleArray(firstFourStudents);
 
-  //Putting the new shuffled array on to the buttons
-  studentBtn1.innerHTML = firstFourStudents[0].name;
-  studentBtn2.innerHTML = firstFourStudents[1].name;
-  studentBtn3.innerHTML = firstFourStudents[2].name;
-  studentBtn4.innerHTML = firstFourStudents[3].name;
+  //Clears the buttons so the function can be reused
+  studentNameButtonWrapper.innerHTML = "";
+
+  //Sets the number of guesses to display the correct amount
+  numOfGuesses.innerHTML = `Number of guesses: ${guesses}`;
+
+  //Putting the new shuffled array items on to buttons we create
+  firstFourStudents.forEach((item) => {
+    studentNameButtonWrapper.innerHTML += `<button class="studentnamebtn" role="button">${item.name}</button>`;
+  });
 };
 
-//Calls the function once 
+//Calls the function once
 guessTheStudent();
 
-//Lägger till en eventlistener på wrappern och kollar så att klicket skedde på knappen
+//Adds an eventlistener to the wrapper and checks if the click was registered on the actual button
 studentNameButtonWrapper.addEventListener("click", (e) => {
+  //Alerts if guesses are more than 20 and ends the game
   if (guesses >= 20) {
-    alert("Game over");
-  } else if (e.target.innerHTML === correctStudentName && guesses <= 20) {
+    alert(`GAME OVER! You got ${correctGuesses} out of 20!`);
+
+    //Changes the text string at the bottom of the page to a button to restart the game
+    numOfGuesses.innerHTML = `<button id="play-again" role="button">Play again</button>`;
+    playAgain = document.querySelector("#play-again");
+    playAgain.addEventListener("click", () => {
+      guesses = 0;
+      correctGuesses = 0;
+      guessTheStudent();
+    });
+
+    //Otherwise checks if the name on the button is the same as the name of the student on the image
+  } else if (e.target.innerHTML === correctStudentName) {
+    //Increases the number of guesses and correctly made guesses
     guesses++;
     correctGuesses++;
-    numOfGuesses.innerHTML = `Number of guesses: ${guesses}`;
+
+    //Console logs
     console.log("Correct!");
-    console.log(correctGuesses)
+
+    //Calls the function again
     guessTheStudent();
-  } else if (e.target.innerHTML !== correctStudentName && guesses <= 20)
-  {
+
+    //Checks
+  } else if (e.target.innerHTML !== correctStudentName) {
     guesses++;
-    numOfGuesses.innerHTML = `Number of guesses: ${guesses}`;
     console.log("Incorrect!");
+
     guessTheStudent();
   }
 });

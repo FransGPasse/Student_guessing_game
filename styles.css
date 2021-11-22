@@ -14,9 +14,10 @@ body {
   justify-content: center;
 }
 
-h1 {
+h2 {
   color: white;
   margin-bottom: .5em;
+  font-weight: 200;
 }
 
 p {
@@ -68,7 +69,6 @@ p {
   overflow: hidden;
   padding-left: 16px;
   padding-right: 16px;
-  position: relative;
   text-decoration: none;
   transition: box-shadow 0.15s, transform 0.15s;
   user-select: none;
@@ -95,13 +95,13 @@ p {
   transform: translateY(2px);
 }
 
-.correct {
+/* .correct {
   border: solid 3px green;
 }
 
 .incorrect {
   border: solid 3px red;
-}
+} */
 
 @media screen and (min-width: 700px) {
   #button-wrapper {

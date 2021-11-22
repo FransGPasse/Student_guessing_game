@@ -185,14 +185,11 @@ const missing_students = [
 //Finds the wrapper containing all the buttons
 const studentNameButtonWrapper = document.querySelector("#button-wrapper");
 
-//Finding ID for the buttons with the name of the students
-const studentBtn1 = document.querySelector("#studentbtn1");
-const studentBtn2 = document.querySelector("#studentbtn2");
-const studentBtn3 = document.querySelector("#studentbtn3");
-const studentBtn4 = document.querySelector("#studentbtn4");
-
 //Gets the ID for the future image of the student to guess
 const student = document.querySelector("#studentimage");
+
+//Gets the header
+const headerElement = document.querySelector("h2");
 
 //Sets the number of guesses and correct guesses to the starting amount - zero
 let guesses = 0;
@@ -237,6 +234,9 @@ const guessTheStudent = () => {
   //Shuffles the new array so we get a random order for the buttons
   shuffleArray(firstFourStudents);
 
+  //Sets the header element
+  headerElement.innerHTML = "Who's that student?! 🧐"
+
   //Clears the buttons so the function can be reused
   studentNameButtonWrapper.innerHTML = "";
 
@@ -264,10 +264,9 @@ studentNameButtonWrapper.addEventListener("click", (e) => {
       highscore = correctGuesses;
 
       //Displays the highscore as a header
-      const showHighscore = document.querySelector("h2");
-      showHighscore.innerHTML = `New highscore is ${highscore}! 🥳`;
+      headerElement.innerHTML = `New highscore is ${highscore}! 🥳`;
     } else {
-      showHighscore.innerHTML = `Current highscore is ${highscore}. Keep trying!`;
+      headerElement.innerHTML = `Current highscore is ${highscore}. Keep trying!`;
     }
 
     //Changes the text string at the bottom of the page to a button to restart the game

@@ -197,6 +197,7 @@ const student = document.querySelector("#studentimage");
 //Sets the number of guesses and correct guesses to the starting amount - zero
 let guesses = 0;
 let correctGuesses = 0;
+let highscore = 0;
 
 //Gets the ID for the paragraph element where we can increment the number of guesses
 const numOfGuesses = document.querySelector("#numofguesses");
@@ -253,10 +254,23 @@ guessTheStudent();
 
 //Adds an eventlistener to the wrapper and checks if the click was registered on the actual button
 studentNameButtonWrapper.addEventListener("click", (e) => {
+
   //Alerts if guesses are more than 20 and ends the game
   if (guesses >= 20) {
     alert(`GAME OVER! You got ${correctGuesses} out of 20!`);
 
+    //Checks if the current highscore is better than the current amount of correct guesses
+    if (highscore < correctGuesses) {
+      //Changes the highscore
+      highscore = correctGuesses;
+
+      //Displays the highscore as a header
+      const showHighscore = document.querySelector("h2");
+      showHighscore.innerHTML = `New highscore is ${highscore}! 🥳`;
+    } else {
+      showHighscore.innerHTML = `Current highscore is ${highscore}. Keep trying!`;
+    }
+    
     //Changes the text string at the bottom of the page to a button to restart the game
     numOfGuesses.innerHTML = `<button id="play-again" role="button">Play again</button>`;
     playAgain = document.querySelector("#play-again");

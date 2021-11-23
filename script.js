@@ -221,15 +221,20 @@ const guessTheStudent = () => {
 
   //Setting the image source to the first student in the new randomized array
   student.setAttribute("src", students[0].image);
-
+  
   //Console logging the first students name
   console.log(students[0].name);
+  
+  //Creates a new array of the student names
+  const mappedStudentNames = students.map(arrayItem => {
+    return arrayItem.name
+  });
 
   //Creates a new array with the first four students from the randomized array
-  firstFourStudents = students.slice(0, 4);
+  firstFourStudents = mappedStudentNames.slice(0, 4);
 
   //Tar rätt namn på studenten på bilden
-  correctStudentName = firstFourStudents[0].name;
+  correctStudentName = firstFourStudents[0];
 
   //Shuffles the new array so we get a random order for the buttons
   shuffleArray(firstFourStudents);
@@ -245,11 +250,11 @@ const guessTheStudent = () => {
 
   //Putting the new shuffled array items on to buttons we create
   firstFourStudents.forEach((item) => {
-    studentNameButtonWrapper.innerHTML += `<button class="studentnamebtn" role="button">${item.name}</button>`;
+    studentNameButtonWrapper.innerHTML += `<button class="studentnamebtn" role="button">${item}</button>`;
   });
 };
 
-//Calls the function once
+//Calls the function once so we start the game
 guessTheStudent();
 
 //Adds an eventlistener to the wrapper and checks if the click was registered on the actual button
@@ -290,11 +295,12 @@ studentNameButtonWrapper.addEventListener("click", (e) => {
     //Calls the function again
     guessTheStudent();
 
-    //Checks
+    //Finally checks if the name clicked is incorrect and in that case adds 1 to number of made guesses
   } else if (e.target.innerHTML !== correctStudentName) {
     guesses++;
     console.log("Incorrect!");
 
+    //Calls the function again
     guessTheStudent();
   }
 });

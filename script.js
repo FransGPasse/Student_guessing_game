@@ -271,23 +271,33 @@ const guessTheStudent = () => {
 //Calls the function once so we start the game
 guessTheStudent();
 
+console.log(guesses);
+
 //Adds an eventlistener to the wrapper and...
 studentNameButtonWrapper.addEventListener("click", (e) => {
+
   //Checks if the click was registered on the actual button
   if (e.target.tagName == "BUTTON") {
+
     //Alerts if guesses are more than 20 and ends the game
-    if (guesses >= 20) {
+    if (guesses === 20) {
       alert(`GAME OVER! You got ${correctGuesses} out of 20!`);
 
-      //Checks if the current highscore is better than the current amount of correct guesses
-      if (correctGuesses = 20) {
+      if (correctGuesses === 20) {
+        //Saves the highscore
         highscore = correctGuesses;
+
+        //Displays the maximum highscore
         headerElement.innerHTML = `You reached the maximum highscore of ${highscore}! 😎`;
-      } else if (highscore < correctGuesses) {
-        //Changes the highscore
+
+        //Checks if the current amount of correct guesses is higher than the current highscore
+      } else if (correctGuesses > highscore) {
+        //Saves the highscore
         highscore = correctGuesses;
+
         //Displays the highscore as a header
         headerElement.innerHTML = `New highscore is ${highscore}! 🥳`;
+        
       } else {
         headerElement.innerHTML = `Current highscore is ${highscore}. Keep trying!`;
       }

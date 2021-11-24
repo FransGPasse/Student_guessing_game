@@ -161,10 +161,11 @@ h2 {
 
 @media screen and (min-width: 425px) {
   #studentimage {
-    max-height: 400px;
+    max-height: 350px;
   }
 }
 
+/* Tablet size */
 @media screen and (min-width: 768px) {
   #button-wrapper {
     display: grid;

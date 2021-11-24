@@ -271,8 +271,6 @@ const guessTheStudent = () => {
 //Calls the function once so we start the game
 guessTheStudent();
 
-console.log(guesses);
-
 //Adds an eventlistener to the wrapper and...
 studentNameButtonWrapper.addEventListener("click", (e) => {
 

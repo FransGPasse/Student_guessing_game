@@ -1,4 +1,4 @@
-//Array som innehåller objekt med namn och bild på alla studenter
+//Array with all the students and their images
 const students = [
   {
     name: "Adi Dzocaj",
@@ -158,40 +158,16 @@ const students = [
   },
 ];
 
-//Array som innehåller objekt med namn på de elever som inte angett en bild
-const missing_students = [
-  {
-    name: "Andjela Saponjic",
-    image: null,
-  },
-  {
-    name: "Cazpian Levén",
-    image: null,
-  },
-  {
-    name: "Frida Lam",
-    image: null,
-  },
-  {
-    name: "Maxim Khnykin",
-    image: null,
-  },
-  {
-    name: "Philip Le",
-    image: null,
-  },
-];
-
 //Finds the wrapper containing all the future buttons
 const studentNameButtonWrapper = document.querySelector("#button-wrapper");
 
 //Gets the ID for the future image of the student to guess
 const student = document.querySelector("#studentimage");
 
-//Gets the header
+//Gets the header element
 const headerElement = document.querySelector("h2");
 
-//Sets the number of guesses and correct guesses to the starting amount - zero
+//Sets the number of guesses, correct guesses and starting highscore to the starting amount - zero
 let guesses = 0;
 let correctGuesses = 0;
 let highscore = 0;
@@ -218,18 +194,16 @@ const shuffleArray = (array) => {
   }
 };
 
-//Puts most of the functionality in to a function
+//Creating a function containing most of the functionality regarding showing a student and four possible answers
 const guessTheStudent = () => {
-  //Calling the function to randomize the student array
+
+  //Calling the function to randomize the cloned student array
   shuffleArray(spreadStudents);
 
-  //Setting the image source to the first student in the new randomized array
+  //Setting the image source to the first student, a.k.a the one to guess, in the new randomized array
   student.setAttribute("src", spreadStudents[0].image);
 
-  //Console logging the first students name
-  console.log(spreadStudents[0].name);
-
-  //Creates a new array of the shuffled student names
+  //Creates a new mapped array to get the shuffled students names
   const mappedStudentNames = spreadStudents.map((arrayItem) => {
     return arrayItem.name;
   });
@@ -240,7 +214,7 @@ const guessTheStudent = () => {
   //Sets the variable studentOnImage to the first student from the new shorter array
   studentOnImage = firstFourStudents[0];
 
-  //Returns a new array with every student from the
+  //Returns a new array with every student from the cloned original array minus the first, correct, student so we don't get the same student more than once
   spreadStudents = spreadStudents.filter(
     (person) => person.name !== firstFourStudents[0]
   );
@@ -257,9 +231,9 @@ const guessTheStudent = () => {
   //Sets the number of guesses to display the correct amount
   numOfGuesses.innerHTML = `Number of guesses: ${guesses}`;
 
-  //Putting the new shuffled array items on to buttons we create here and...
+  //Putting the new shuffled array items (students) on to buttons we create here and...
   firstFourStudents.forEach((item) => {
-    //Adds an ID of correctstudent to the button with the right name
+    //Adds an ID of correctstudent to the button containing the right name
     if (item == studentOnImage) {
       studentNameButtonWrapper.innerHTML += `<button class="studentnamebtn" role="button" id="correctstudent">${item}</button>`;
     } else {
@@ -268,8 +242,10 @@ const guessTheStudent = () => {
   });
 };
 
+
 //Calls the function once so we start the game
 guessTheStudent();
+
 
 //Adds an eventlistener to the wrapper and...
 studentNameButtonWrapper.addEventListener("click", (e) => {
@@ -277,8 +253,11 @@ studentNameButtonWrapper.addEventListener("click", (e) => {
   //Checks if the click was registered on the actual button
   if (e.target.tagName == "BUTTON") {
 
+    //Adds to the number of made guesses
+    guesses++;
+
     //Alerts if guesses are more than 20 and ends the game
-    if (guesses === 20) {
+    if (guesses > 20) {
       alert(`GAME OVER! You got ${correctGuesses} out of 20!`);
 
       if (correctGuesses === 20) {
@@ -297,11 +276,13 @@ studentNameButtonWrapper.addEventListener("click", (e) => {
         headerElement.innerHTML = `New highscore is ${highscore}! 🥳`;
         
       } else {
+        //Otherwise encourages you to keep trying!
         headerElement.innerHTML = `Current highscore is ${highscore}. Keep trying!`;
       }
 
       //Changes the text string at the bottom of the page to a button to restart the game
       numOfGuesses.innerHTML = `<button id="play-again" role="button">Play again</button>`;
+
       playAgain = document.querySelector("#play-again");
       playAgain.addEventListener("click", () => {
         spreadStudents = [...students];
@@ -310,16 +291,16 @@ studentNameButtonWrapper.addEventListener("click", (e) => {
         guessTheStudent();
       });
 
-      //Otherwise checks if the name on the button is the same as the name of the student on the image
+      //Checks if the name on the button is the same as the name of the student on the image
     } else if (e.target.innerHTML === studentOnImage) {
+
       //Increases the number of guesses and correctly made guesses
-      guesses++;
       correctGuesses++;
 
       //Finds the button with the correct student name and ID of correctstudent
       correctStudent = document.querySelector("#correctstudent");
 
-      //Adds the green border around the button to show that it's correct to the CSS and displays for a while
+      //Adds a CSS class with a green border around the button to show that it's correct and displays for a while
       correctStudent.classList.add("correct");
 
       //Calls the function again
@@ -327,14 +308,14 @@ studentNameButtonWrapper.addEventListener("click", (e) => {
         guessTheStudent();
       }, 1200);
 
-      //Finally checks if the name clicked is incorrect and in that case adds 1 to number of made guesses
+      //Otherwise checks if the name clicked is incorrect and shows correct/clicked student
     } else if (e.target.innerHTML !== studentOnImage) {
-      guesses++;
 
+      //Finds the correct student AND the incorrect student and adds the correlating CSS classes to them
       correctStudent = document.querySelector("#correctstudent");
       const incorrectStudent = e.target;
 
-      //Adds a green border around the correct button and a red around the one the user clicked to show that the guess is incorrect to the CSS and displays for a while
+      //Adds a green border around the correct button and a red around the one the user clicked to show that the guess is incorrect and displays for a while
       correctStudent.classList.add("correct");
       incorrectStudent.classList.add("incorrect");
 

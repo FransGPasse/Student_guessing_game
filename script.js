@@ -308,7 +308,9 @@ studentNameButtonWrapper.addEventListener("click", (e) => {
       //Adds a CSS class with a green border around the button to show that it's correct and displays for a while
       correctStudent.classList.add("correct");
 
+      //Calls the function to disable all click events on the game
       disableClicks();
+
       //Calls the function again
       setTimeout(() => {
         guessTheStudent();
@@ -324,7 +326,9 @@ studentNameButtonWrapper.addEventListener("click", (e) => {
       correctStudent.classList.add("correct");
       incorrectStudent.classList.add("incorrect");
 
+      //Calls the function to disable all click events on the game
       disableClicks();
+
       //Calls the function again
       setTimeout(() => {
         guessTheStudent();

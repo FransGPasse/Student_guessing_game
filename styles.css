@@ -150,12 +150,12 @@ h2 {
 }
 
 .correct {
-  border: solid 4px green;
+  outline: solid 4px green;
   color: green;
 }
 
 .incorrect {
-  border: solid 4px red;
+  outline: solid 4px red;
   color: red;
 }
 

@@ -158,6 +158,9 @@ const students = [
   },
 ];
 
+//Finds the gameWrapper element
+const gameWrapper = document.querySelector("#game-wrapper");
+
 //Finds the wrapper containing all the future buttons
 const studentNameButtonWrapper = document.querySelector("#button-wrapper");
 
@@ -196,7 +199,6 @@ const shuffleArray = (array) => {
 
 //Creating a function containing most of the functionality regarding showing a student and four possible answers
 const guessTheStudent = () => {
-
   //Calling the function to randomize the cloned student array
   shuffleArray(spreadStudents);
 
@@ -242,17 +244,22 @@ const guessTheStudent = () => {
   });
 };
 
+//Creates a function to disable all clicks when the answer is being displayed so you can't spam-click the correct answer and increase your correct guesses
+const disableClicks = () => {
+  gameWrapper.classList.add("disable-clicks");
+
+  setTimeout(() => {
+    gameWrapper.classList.remove("disable-clicks");
+  }, 1200);
+};
 
 //Calls the function once so we start the game
 guessTheStudent();
 
-
 //Adds an eventlistener to the wrapper and...
 studentNameButtonWrapper.addEventListener("click", (e) => {
-
   //Checks if the click was registered on the actual button
   if (e.target.tagName == "BUTTON") {
-
     //Adds to the number of made guesses
     guesses++;
 
@@ -274,7 +281,6 @@ studentNameButtonWrapper.addEventListener("click", (e) => {
 
         //Displays the highscore as a header
         headerElement.innerHTML = `New highscore is ${highscore}! 🥳`;
-        
       } else {
         //Otherwise encourages you to keep trying!
         headerElement.innerHTML = `Current highscore is ${highscore}. Keep trying!`;
@@ -293,7 +299,6 @@ studentNameButtonWrapper.addEventListener("click", (e) => {
 
       //Checks if the name on the button is the same as the name of the student on the image
     } else if (e.target.innerHTML === studentOnImage) {
-
       //Increases the number of guesses and correctly made guesses
       correctGuesses++;
 
@@ -303,6 +308,7 @@ studentNameButtonWrapper.addEventListener("click", (e) => {
       //Adds a CSS class with a green border around the button to show that it's correct and displays for a while
       correctStudent.classList.add("correct");
 
+      disableClicks();
       //Calls the function again
       setTimeout(() => {
         guessTheStudent();
@@ -310,7 +316,6 @@ studentNameButtonWrapper.addEventListener("click", (e) => {
 
       //Otherwise checks if the name clicked is incorrect and shows correct/clicked student
     } else if (e.target.innerHTML !== studentOnImage) {
-
       //Finds the correct student AND the incorrect student and adds the correlating CSS classes to them
       correctStudent = document.querySelector("#correctstudent");
       const incorrectStudent = e.target;
@@ -319,6 +324,7 @@ studentNameButtonWrapper.addEventListener("click", (e) => {
       correctStudent.classList.add("correct");
       incorrectStudent.classList.add("incorrect");
 
+      disableClicks();
       //Calls the function again
       setTimeout(() => {
         guessTheStudent();

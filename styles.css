@@ -1,3 +1,4 @@
+/* CSS reset and global styles */
 *,
 *::after,
 *::before {
@@ -23,10 +24,34 @@ h2 {
   text-align: center;
 }
 
+
+/* Helper classes and initially hidden styles */
 .disable-clicks {
   pointer-events: none;
 }
 
+.hidden {
+  display: none !important;
+}
+
+#finished {
+  max-height: 250px;
+  max-width: 100%;
+  margin-bottom: 1em;
+
+  transition: transform ease-in-out 200ms;
+}
+
+#finished:hover {
+  transform: scale(1.03);
+}
+
+#result {
+  color: white;
+}
+
+
+/* Main styles */
 #game-wrapper {
   display: flex;
   flex-direction: column;
@@ -87,6 +112,7 @@ h2 {
   box-shadow: #d6d6e7 0 3px 7px inset;
   transform: translateY(2px);
 }
+
 
 #numofguesses {
   margin-top: 1em;
@@ -163,6 +189,10 @@ h2 {
   #studentimage {
     max-height: 350px;
   }
+
+  #finished {
+    max-height: 350px;
+  }
 }
 
 /* Tablet size */
@@ -174,6 +204,10 @@ h2 {
   }
 
   #studentimage {
+    max-height: 500px;
+  }
+
+  #finished {
     max-height: 500px;
   }
 }

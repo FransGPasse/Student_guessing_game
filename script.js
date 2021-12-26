@@ -167,6 +167,12 @@ const studentNameButtonWrapper = document.querySelector("#button-wrapper");
 //Gets the ID for the future image of the student to guess
 const student = document.querySelector("#studentimage");
 
+//Gets the ID for the picture we display when the game is finished...
+const finished = document.querySelector("#finished");
+
+//... And the <p> tag
+const result = document.querySelector("#result");
+
 //Gets the header element
 const headerElement = document.querySelector("h2");
 
@@ -231,7 +237,7 @@ const guessTheStudent = () => {
   studentNameButtonWrapper.innerHTML = "";
 
   //Sets the number of guesses to display the correct amount
-  numOfGuesses.innerHTML = `Number of guesses: ${guesses}`;
+  numOfGuesses.innerHTML = `Number of guesses: ${guesses}/20`;
 
   //Putting the new shuffled array items (students) on to buttons we create here and...
   firstFourStudents.forEach((item) => {
@@ -265,14 +271,23 @@ studentNameButtonWrapper.addEventListener("click", (e) => {
 
     //Alerts if guesses are more than 20 and ends the game
     if (guesses > 20) {
-      alert(`GAME OVER! You got ${correctGuesses} out of 20!`);
+
+      headerElement.innerHTML = `GAME OVER! You got ${correctGuesses} out of 20! 😊`;
+
+      //Adds a picture of a trophy and a paragraph with the result and hides the student image
+      student.classList.toggle("hidden");
+      finished.classList.toggle("hidden");
+      result.classList.toggle("hidden");
+
+      //Removes the buttons
+      studentNameButtonWrapper.innerHTML = "";
 
       if (correctGuesses === 20) {
         //Saves the highscore
         highscore = correctGuesses;
 
         //Displays the maximum highscore
-        headerElement.innerHTML = `You reached the maximum highscore of ${highscore}! 😎`;
+        result.innerHTML = `You reached the maximum highscore of ${highscore}! 😎`;
 
         //Checks if the current amount of correct guesses is higher than the current highscore
       } else if (correctGuesses > highscore) {
@@ -280,10 +295,10 @@ studentNameButtonWrapper.addEventListener("click", (e) => {
         highscore = correctGuesses;
 
         //Displays the highscore as a header
-        headerElement.innerHTML = `New highscore is ${highscore}! 🥳`;
+        result.innerHTML = `New highscore is ${highscore}! 🥳`;
       } else {
         //Otherwise encourages you to keep trying!
-        headerElement.innerHTML = `Current highscore is ${highscore}. Keep trying!`;
+        result.innerHTML = `Current highscore is ${highscore}. Keep trying! 👏🏼`;
       }
 
       //Changes the text string at the bottom of the page to a button to restart the game
@@ -294,6 +309,9 @@ studentNameButtonWrapper.addEventListener("click", (e) => {
         spreadStudents = [...students];
         guesses = 0;
         correctGuesses = 0;
+        student.classList.toggle("hidden");
+        finished.classList.toggle("hidden");
+        result.classList.toggle("hidden");
         guessTheStudent();
       });
 

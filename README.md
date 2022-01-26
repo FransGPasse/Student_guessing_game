@@ -1,5 +1,8 @@
 # Student guessing-game
 
+## Live version
+Hosted here at Netlify: https://frans-gustavson-passe-student-guessing-name.netlify.app/
+
 ## Background
 This was a project from the first half of the course "JavaScript Grundkurs" @ Medieinstitutet Malmö, where we got to learn the basics of "vanilla" JavaScript and implement them in this project.
 
